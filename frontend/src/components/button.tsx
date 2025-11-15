@@ -1,13 +1,17 @@
 type ButtonProps = {
   text: string;
-  onClick?: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
-};
 
-export default function Button({ text, onClick, className }: ButtonProps) {
-  return (
-    <button onClick={onClick} className={className}>
-      {text}
-    </button>
-  );
 }
+
+const Button = (props: ButtonProps) => {
+  return (
+    <div>
+      <button className="cursor-pointer border-2 p-8" onClick={props.onClick}>
+        {props.text}
+      </button>
+    </div>
+  );
+};
+export default Button;

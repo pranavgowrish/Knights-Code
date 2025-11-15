@@ -1,8 +1,16 @@
 import Image from "next/image";
 import Button from "@/components/button";
 import styles from "@/app/home.module.css"; 
+"use client";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter();
+
+  const handleTeacher = () => {
+    router.push("/teacher");
+  };
+
   return (
     <div className={styles.container}>
       {/* Background */}
@@ -21,6 +29,7 @@ const Home = () => {
           <div className={styles.buttonContainer}>
             <Button 
               text="School Master" 
+              onClick={handleTeacher}
               className={styles.button + " " + styles.buttonRed} 
             />
           </div>
@@ -34,6 +43,7 @@ const Home = () => {
           <div className={styles.buttonContainer}>
             <Button 
               text="Scholar" 
+              onClick={handleTeacher}
               className={styles.button + " " + styles.buttonGreen} 
             />
           </div>

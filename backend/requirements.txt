@@ -1,2 +1,5 @@
 pypdf
 astrapy
+fastapi
+uvicorn
+python-multipart

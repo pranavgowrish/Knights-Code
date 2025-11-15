@@ -37,6 +37,9 @@ const IDE = (props: IDEProps) => {
   };
 
   const [playground, setPlayground] = useState<Playground>();
+  const [errors, setErrors] = useState("");
+
+  const [showgenie, setgenie] = useState(true);
 
   const onReady = (sdk: Playground) => {
     setPlayground(sdk);
@@ -46,7 +49,8 @@ const IDE = (props: IDEProps) => {
       if (args[0] == props.correctOutput) {
         console.log("✅ Correct!");
       } else {
-        console.log("❌ Try again!");
+        console.log("❌ Try again!: ", args[0]);
+        setErrors(args[0]);
       }
     });
 
@@ -58,25 +62,135 @@ const IDE = (props: IDEProps) => {
 
   const run = async () => {
     playground.run().then((result) => {
-      console.log("Run finished:", result);
+      console.log("Run finished");
+    });
+  };
+
+  const ask = async () => {
+    let code = "";
+    let error = "";
+    playground.getCode().then((code) => {
+      const { content, language, compiled } = code.script;
+      console.log("Current code content:", content);
+      code = content;
+    });
+    playground.run().then((result) => {
+      console.log("Errors found: ", errors);
+      error = errors;
     });
   };
 
   return (
     <div>
-      <LiveCodes
-        {...options}
-        sdkReady={onReady}
-        script={props.script}
-        correctOutput={props.correctOutput}
-        style={{ width: "100vw", height: "100vh" }}
-      />
-      <button
-        onClick={run}
-        className="absolute bottom-10 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-      >
-        Run Code
-      </button>
+      <div className="relative flex items-center justify-center">
+        <LiveCodes
+          {...options}
+          sdkReady={onReady}
+          script={props.script}
+          correctOutput={props.correctOutput}
+          style={{ width: "50vw", height: "95vh" }}
+        />
+
+        {/* Buttons */}
+        <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 transform space-x-3">
+          {/* Cast Spell */}
+          <button
+            onClick={run}
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-md border-3 border-yellow-900 bg-gradient-to-br from-yellow-700 to-red-800 px-3 py-1 text-xs font-bold text-white uppercase shadow-[0_0_15px_rgba(255,215,0,0.7)] ring-1 ring-yellow-400 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,180,0.9)]"
+          >
+            ⚔ Cast Spell ⚔
+          </button>
+
+          {/* Merlin AI */}
+          <button
+            onClick={ask}
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-md border-3 border-blue-900 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 px-3 py-1 text-xs font-bold text-white uppercase shadow-[0_0_10px_rgba(100,200,255,0.6)] ring-1 ring-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(150,220,255,0.8)]"
+          >
+            ✨ Merlin AI ✨
+          </button>
+        </div>
+      </div>
+
+      {showgenie && (
+        <div className="absolute top-1/2 right-30 z-50 w-80 -translate-y-1/2 transform">
+          <div className="relative animate-pulse overflow-hidden rounded-xl border-2 border-yellow-400 bg-yellow-100/90 p-4 shadow-xl backdrop-blur-sm">
+            <div className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-yellow-200 shadow-inner"></div>
+            <div className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-yellow-200 shadow-inner"></div>
+            <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-yellow-200 shadow-inner"></div>
+            <div className="absolute -right-2 -bottom-2 h-6 w-6 rounded-full bg-yellow-200 shadow-inner"></div>
+
+            {/* Title */}
+            <h2 className="mb-2 animate-pulse text-lg font-extrabold tracking-wider text-yellow-800">
+              📜 Merlin AI
+            </h2>
+
+            {/* Content with shimmer */}
+            <p className="relative mb-4 overflow-hidden text-sm text-yellow-900">
+              <span className="loading-text">Consulting the Oracle…</span>
+            </p>
+
+            {/* Sparkles */}
+            <div className="animate-bounce-slow absolute top-2 left-1/2 h-2 w-2 -translate-x-1/2 transform rounded-full bg-white opacity-50"></div>
+            <div className="animate-bounce-slower absolute top-6 right-6 h-1 w-1 rounded-full bg-white opacity-50"></div>
+            <div className="animate-bounce-slowest absolute bottom-4 left-10 h-1 w-1 rounded-full bg-white opacity-50"></div>
+
+            {/* Close button as a small ribbon/tab */}
+            <button
+              onClick={() => setgenie(false)}
+              className="rounded bg-yellow-800 px-3 py-1 text-xs font-semibold text-yellow-100 shadow-md transition-colors hover:bg-yellow-700"
+            >
+              ✖ Close
+            </button>
+          </div>
+
+          {/* Tailwind keyframes for text shimmer and bouncing sparkles */}
+          <style jsx>{`
+            .loading-text {
+              display: inline-block;
+              position: relative;
+              color: #b07c00;
+            }
+            .loading-text::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+              );
+              animation: shimmer 1.5s infinite;
+            }
+
+            @keyframes shimmer {
+              0% {
+                left: -100%;
+              }
+              100% {
+                left: 100%;
+              }
+            }
+
+            @keyframes bounce-slowest {
+              0%,
+              100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(-1px);
+              }
+            }
+
+            .animate-bounce-slowest {
+              animation: bounce-slowest 2.5s infinite ease-in-out;
+            }
+          `}</style>
+        </div>
+      )}
     </div>
   );
 };

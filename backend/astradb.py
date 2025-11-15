@@ -1,5 +1,6 @@
 import os
 import pdf
+import io
 from astrapy import DataAPIClient, Database
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -38,10 +39,11 @@ app.add_middleware(
 @app.post("/pdf")
 async def upload_pdf(file: UploadFile = File(...)):
     data = await file.read()
+    file_like = io.BytesIO(data)
     
-    print(data)
+    print(file_like)
     
-    parsed = pdf.parse(data)
+    parsed = pdf.parse(file_like)
     
     if (not parsed):
         message = {
@@ -53,7 +55,8 @@ async def upload_pdf(file: UploadFile = File(...)):
     
     for chapter, topic in parsed.items():
         number = chapter[2:3]
-        
+        if chapter[3:4] == "0":
+            number = chapter[2:4]
         chapterData = {
             "chapternumber": int(number),
             "chapter": str(chapter[5:]),
@@ -61,7 +64,7 @@ async def upload_pdf(file: UploadFile = File(...)):
             "t2": str(topic[1])
         }
         
-        chapters.insert(chapterData)
+        chapters.insert_one(chapterData)
     
     
     message = {

@@ -1,7 +1,7 @@
+"use client";
 import Image from "next/image";
 import Button from "@/components/button";
-import styles from "@/app/home.module.css"; 
-"use client";
+import styles from "@/app/home.module.css";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
@@ -9,6 +9,10 @@ const Home = () => {
 
   const handleTeacher = () => {
     router.push("/teacher");
+  };
+
+  const handleStudent = () => {
+    router.push("/StudentMap");
   };
 
   return (
@@ -27,10 +31,10 @@ const Home = () => {
         <div className={styles.row}>
           {/* Left Button */}
           <div className={styles.buttonContainer}>
-            <Button 
-              text="School Master" 
+            <Button
+              text="School Master"
               onClick={handleTeacher}
-              className={styles.button + " " + styles.buttonRed} 
+              className={styles.button + " " + styles.buttonRed}
             />
           </div>
 
@@ -41,10 +45,10 @@ const Home = () => {
 
           {/* Right Button */}
           <div className={styles.buttonContainer}>
-            <Button 
-              text="Scholar" 
-              onClick={handleTeacher}
-              className={styles.button + " " + styles.buttonGreen} 
+            <Button
+              text="Scholar"
+              onClick={handleStudent}
+              className={styles.button + " " + styles.buttonGreen}
             />
           </div>
         </div>

@@ -1,6 +1,7 @@
 import os
 import pdf
 import io
+import gemini
 from astrapy import DataAPIClient, Database
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -189,16 +190,18 @@ def getQuestion(chapter, question):
     intquestion = int(question)
     
     if intquestion == 1:
-        print(chapterData["chapter"], chapterData["t1"], chapterData["t2"])
+        print(chapterData["chapter"], chapterData["t1"], chapterData["t2"], "\n")
+        gemini.generate_mcq(chapterData["t1"], chapterData["t2"])
     elif intquestion == 2:
-        print(chapterData["chapter"], chapterData["t1"])
+        print(chapterData["chapter"], chapterData["t1"], "\n")
+        gemini.generate_coding(chapterData["t1"])
     elif intquestion == 3:
-        print(chapterData["chapter"], chapterData["t2"])
-    
+        print(chapterData["chapter"], chapterData["t2"], "\n")
+        gemini.generate_coding(chapterData["t2"])
     # message = {
     #     "message": "Success"
     # }
     
     # return JSONResponse(content=message)
     
-getQuestion(2, 2)
+getQuestion(2, 1)

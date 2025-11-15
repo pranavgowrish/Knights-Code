@@ -8,7 +8,10 @@ interface ChapterNodeProps {
 const ChapterNode = (props: ChapterNodeProps) => {
   return (
     <div>
-      <button className="m-2 cursor-pointer rounded-full border-2" onClick={props.onClick}>
+      <button
+        className="m-2 cursor-pointer rounded-full border-2"
+        onClick={props.onClick}
+      >
         <Image
           className="h-30 w-30 rounded-full"
           src={props.src}

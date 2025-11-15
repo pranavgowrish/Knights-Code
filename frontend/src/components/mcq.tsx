@@ -26,64 +26,61 @@ const MCQ = (props: MCQProps) => {
   };
 
   return (
-    <div className="flex items-center justify-start h-screen ">
+    <div className="flex h-screen items-center justify-start">
+      <div className="mx-auto w-full max-w-md">
+        <div className="h-96 h-[90vh] w-[50vw] overflow-y-auto rounded-lg border-2 border-yellow-700 bg-yellow-100 p-4 shadow">
+          {/* Passage */}
+          <h2 className="mb-2 text-center text-lg font-bold text-yellow-900">
+            📜 Passage
+          </h2>
+          <p className="mb-4 text-sm text-yellow-900">{props.passage}</p>
 
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-yellow-100 rounded-lg border-2 border-yellow-700 shadow h-96 overflow-y-auto p-4 h-[90vh] w-[50vw]">
-        {/* Passage */}
-        <h2 className="text-lg font-bold mb-2 text-yellow-900 text-center">
-          📜 Passage
-        </h2>
-        <p className="mb-4 text-sm text-yellow-900">{props.passage}</p>
+          {/* Questions */}
+          {["q1", "q2", "q3"].map((qKey, i) => {
+            const qObj = props[qKey as keyof MCQProps] as any;
+            return (
+              <div key={qKey} className="mb-4">
+                <h3 className="mb-2 text-base font-semibold text-yellow-900">
+                  {i + 1}. {qObj.q}
+                </h3>
 
-        {/* Questions */}
-        {["q1", "q2", "q3"].map((qKey, i) => {
-          const qObj = props[qKey as keyof MCQProps] as any;
-          return (
-            <div key={qKey} className="mb-4">
-              <h3 className="text-base font-semibold text-yellow-900 mb-2">
-                {i + 1}. {qObj.q}
-              </h3>
-
-              <div className="space-y-1">
-                {[qObj.c1, qObj.c2, qObj.c3].map((c: string) => (
-                  <button
-                    key={c}
-                    onClick={() => handleSelect(qKey as any, c)}
-                    className={`w-full text-left px-3 py-1 text-sm rounded border
-                      ${
+                <div className="space-y-1">
+                  {[qObj.c1, qObj.c2, qObj.c3].map((c: string) => (
+                    <button
+                      key={c}
+                      onClick={() => handleSelect(qKey as any, c)}
+                      className={`w-full rounded border px-3 py-1 text-left text-sm ${
                         answers[qKey as keyof typeof answers] === c
-                          ? "bg-yellow-600 text-white border-yellow-800"
-                          : "bg-yellow-200 text-yellow-900 border-yellow-600 hover:bg-yellow-300"
-                      }
-                    `}
-                  >
-                    {c}
-                  </button>
-                ))}
+                          ? "border-yellow-800 bg-yellow-600 text-white"
+                          : "border-yellow-600 bg-yellow-200 text-yellow-900 hover:bg-yellow-300"
+                      } `}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {/* Submit */}
-        <div className="text-center mt-3 mb-4">
-          <button
-            onClick={handleSubmit}
-            className="px-4 py-2 text-sm bg-red-800 text-white rounded border-2 border-red-900 hover:scale-105"
-          >
-            Submit
-          </button>
-        </div>
-
-        {/* Result */}
-        {result && (
-          <div className="mb-4 p-2 bg-yellow-700 text-white text-center rounded text-sm">
-            {result}
+          {/* Submit */}
+          <div className="mt-3 mb-4 text-center">
+            <button
+              onClick={handleSubmit}
+              className="rounded border-2 border-red-900 bg-red-800 px-4 py-2 text-sm text-white hover:scale-105"
+            >
+              Submit
+            </button>
           </div>
-        )}
+
+          {/* Result */}
+          {result && (
+            <div className="mb-4 rounded bg-yellow-700 p-2 text-center text-sm text-white">
+              {result}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

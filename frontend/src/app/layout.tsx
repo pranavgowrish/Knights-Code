@@ -3,7 +3,6 @@ import { UnifrakturMaguntia } from "next/font/google";
 import { ReactQueryClientProvider } from "@/utils/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-
 // Merged metadata, prioritizing the mystical theme
 export const metadata = {
   title: "Mystical Splash Screen",
@@ -16,18 +15,19 @@ type LayoutProps = {
 
 // Configure the UnifrakturMaguntia font loader
 const unifraktur = UnifrakturMaguntia({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-unifraktur', 
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-unifraktur",
 });
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="en" className={unifraktur.variable}> 
-      <body className={inter.className}>
-                <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
-
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+    <html lang="en" className={unifraktur.variable}>
+      <body className={unifraktur.className}>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+        >
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
         </GoogleOAuthProvider>
       </body>
     </html>

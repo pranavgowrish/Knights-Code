@@ -9,7 +9,7 @@ const Student = () => {
     if (credentialResponse.credential) {
       const user = jwtDecode(credentialResponse.credential);
       console.log("Decoded user:", user);
-      const email=user.email;
+      const email = user.email;
       console.log("User email:", email);
       //FIXXMEEE use me
     } else {

@@ -70,15 +70,15 @@ const StudyZone = (props: StudyZoneProps) => {
             >
               &lt;
             </button>
-            <div className="flex items-center justify-center space-x-2 text-yellow-300 font-bold text-lg tracking-wider">
-  <span className="bg-yellow-800 px-2 py-1 rounded shadow-md border-2 border-yellow-600">
-    Chapter {props.chapno}
-  </span>
-  <span className="text-yellow-500 font-extrabold">/</span>
-  <span className="bg-yellow-800 px-2 py-1 rounded shadow-md border-2 border-yellow-600">
-    Mission {props.qno}
-  </span>
-</div>
+            <div className="flex items-center justify-center space-x-2 text-lg font-bold tracking-wider text-yellow-300">
+              <span className="rounded border-2 border-yellow-600 bg-yellow-800 px-2 py-1 shadow-md">
+                Chapter {props.chapno}
+              </span>
+              <span className="font-extrabold text-yellow-500">/</span>
+              <span className="rounded border-2 border-yellow-600 bg-yellow-800 px-2 py-1 shadow-md">
+                Mission {props.qno}
+              </span>
+            </div>
 
             <button
               onClick={handleNext}
@@ -89,10 +89,10 @@ const StudyZone = (props: StudyZoneProps) => {
           </div>
 
           <div className="flex h-screen w-screen items-center justify-start px-10">
-{props.qno !== 1 && (
-  <IDE
-    script={{
-      content: `
+            {props.qno !== 1 && (
+              <IDE
+                script={{
+                  content: `
 #include <iostream>
 using namespace std;
 
@@ -106,36 +106,36 @@ int main() {
     return 0;
 }
 `,
-    }}
-    correctOutput={"5"}
-  />
-)}
-{props.qno == 1 && (
-<MCQ
-  passage="Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions."
-  q1={{
-    q: "What is the main idea?",
-    c1: "Cats are amazing",
-    c2: "Dogs are fast",
-    c3: "Birds fly",
-    a: "Cats are amazing",
-  }}
-  q2={{
-    q: "Why is the author surprised?",
-    c1: "The cat can jump high",
-    c2: "The cat can code",
-    c3: "The cat can talk",
-    a: "The cat can code",
-  }}
-  q3={{
-    q: "What does the cat represent?",
-    c1: "Curiosity",
-    c2: "Happiness",
-    c3: "Fear",
-    a: "Curiosity",
-  }}
-/>
-)}
+                }}
+                correctOutput={"5"}
+              />
+            )}
+            {props.qno == 1 && (
+              <MCQ
+                passage="Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions."
+                q1={{
+                  q: "What is the main idea?",
+                  c1: "Cats are amazing",
+                  c2: "Dogs are fast",
+                  c3: "Birds fly",
+                  a: "Cats are amazing",
+                }}
+                q2={{
+                  q: "Why is the author surprised?",
+                  c1: "The cat can jump high",
+                  c2: "The cat can code",
+                  c3: "The cat can talk",
+                  a: "The cat can code",
+                }}
+                q3={{
+                  q: "What does the cat represent?",
+                  c1: "Curiosity",
+                  c2: "Happiness",
+                  c3: "Fear",
+                  a: "Curiosity",
+                }}
+              />
+            )}
           </div>
         </>
       )}

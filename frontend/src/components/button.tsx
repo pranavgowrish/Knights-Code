@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 type ButtonProps = {
   text: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -6,7 +6,6 @@ type ButtonProps = {
 };
 
 const Button: React.FC<ButtonProps> = ({ text, onClick, className }) => {
-  
   // Base button styles derived from your Dark Fantasy design requirements:
   const baseClasses = `
     /* Base Size & Text */
@@ -29,9 +28,9 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, className }) => {
   `;
 
   return (
-    <button 
+    <button
       // Merging base classes with the theme classes
-      className={`${baseClasses} ${className || ''}`}
+      className={`${baseClasses} ${className || ""}`}
       onClick={onClick}
     >
       {text}

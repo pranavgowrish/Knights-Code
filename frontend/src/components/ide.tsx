@@ -260,5 +260,3 @@ const IDE = (props: IDEProps) => {
 };
 
 export default IDE;
-
-

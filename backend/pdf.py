@@ -30,4 +30,4 @@ def parse(file):
     
     return data
 
-print(parse("CS10A_Topics.pdf"))
+# print(parse("CS10A_Topics.pdf"))

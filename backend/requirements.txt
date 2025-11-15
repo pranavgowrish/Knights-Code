@@ -1,10 +1,7 @@
 pypdf
 astrapy
 fastapi
-<<<<<<< HEAD
 google-genai
 uvicorn
-=======
 uvicorn
 python-multipart
->>>>>>> b1eade3c11212226580211010cda45e87d452065

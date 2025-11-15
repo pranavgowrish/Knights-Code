@@ -1,5 +1,7 @@
 pypdf
 astrapy
 fastapi
+google-genai
+uvicorn
 uvicorn
 python-multipart

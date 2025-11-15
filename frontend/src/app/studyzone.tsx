@@ -1,5 +1,6 @@
 "use client";
 import IDE from "@/components/ide";
+import MCQ from "@/components/mcq";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { p, s } from "framer-motion/client";
@@ -71,11 +72,11 @@ const StudyZone = (props: StudyZoneProps) => {
             </button>
             <div className="flex items-center justify-center space-x-2 text-yellow-300 font-bold text-lg tracking-wider">
   <span className="bg-yellow-800 px-2 py-1 rounded shadow-md border-2 border-yellow-600">
-    📜 Chap {props.chapno}
+    Chapter {props.chapno}
   </span>
   <span className="text-yellow-500 font-extrabold">/</span>
   <span className="bg-yellow-800 px-2 py-1 rounded shadow-md border-2 border-yellow-600">
-    🏰 Quest {props.qno}
+    Mission {props.qno}
   </span>
 </div>
 
@@ -88,22 +89,53 @@ const StudyZone = (props: StudyZoneProps) => {
           </div>
 
           <div className="flex h-screen w-screen items-center justify-start px-10">
-            <IDE
-              script={{
-                content:
-                  "#include <iostream>\n" +
-                  "using namespace std;\n\n" +
-                  "int add(int a, int b) {\n" +
-                  "    // TODO: fix this function\n" +
-                  "    return a - b; // wrong on purpose\n" +
-                  "}\n\n" +
-                  "int main() {\n" +
-                  "    cout << add(2, 3) << endl;\n" +
-                  "    return 0;\n" +
-                  "}\n",
-              }}
-              correctOutput={"5"}
-            />
+{props.qno !== 1 && (
+  <IDE
+    script={{
+      content: `
+#include <iostream>
+using namespace std;
+
+int add(int a, int b) {
+    // TODO: fix this function
+    return a - b; // wrong on purpose
+}
+
+int main() {
+    cout << add(2, 3) << endl;
+    return 0;
+}
+`,
+    }}
+    correctOutput={"5"}
+  />
+)}
+{props.qno == 1 && (
+<MCQ
+  passage="Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions.Read the passage below and answer the questions."
+  q1={{
+    q: "What is the main idea?",
+    c1: "Cats are amazing",
+    c2: "Dogs are fast",
+    c3: "Birds fly",
+    a: "Cats are amazing",
+  }}
+  q2={{
+    q: "Why is the author surprised?",
+    c1: "The cat can jump high",
+    c2: "The cat can code",
+    c3: "The cat can talk",
+    a: "The cat can code",
+  }}
+  q3={{
+    q: "What does the cat represent?",
+    c1: "Curiosity",
+    c2: "Happiness",
+    c3: "Fear",
+    a: "Curiosity",
+  }}
+/>
+)}
           </div>
         </>
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import closeScroll from "@/public/icons/close-scroll.png";
+import closeScroll from "@/public/icons/closed_scroll.png";
 import Image from "next/image";
 
 type InventoryProps = {

@@ -95,7 +95,7 @@ const StudentMap = () => {
     return;
   };
   // --- END OF EXISTING LOGIC ---
-
+  
   return (
     // 1. Root Container
     <div className="min-h-screen w-screen flex items-center justify-center relative bg-gray-900">
@@ -108,6 +108,7 @@ const StudentMap = () => {
         className="absolute top-0 left-0 z-0 object-cover" 
         priority
       />
+      
 
       {/* 3. Antique Frame Wrapper (16:9 Aspect Ratio Look) */}
       <div 
@@ -115,6 +116,14 @@ const StudentMap = () => {
                    border-4 border-[#4b350f] lg:border-8 
                    z-10 "
       >
+        {/* NEW PATHWAY IMAGE (z-35) - Placed below the chapter nodes (z-40) */}
+        <Image 
+          src="/background/pathway-removebg-preview.png"
+          alt="Map Pathway"
+          fill
+          className="absolute inset-0 object-cover z-" 
+          priority
+        />
         
         {/* Title Header (z-20: Sits above frame/background) */}
         <header className="absolute top-4 left-0 right-0 p-4 text-center z-20 bg-gray-900/40 backdrop-blur-sm shadow-xl mx-auto w-[calc(100%-2rem)] max-w-lg rounded-lg">
@@ -139,7 +148,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter1} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -153,7 +162,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter3} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-start justify-center rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-start justify-center rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -163,7 +172,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter4} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -177,7 +186,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter9} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -187,7 +196,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter10} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -201,7 +210,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter2} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -215,7 +224,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter5} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -229,7 +238,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter8} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-center justify-end rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-center justify-end rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -247,7 +256,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter6} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-end justify-end rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-end justify-end rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}
@@ -261,7 +270,7 @@ const StudentMap = () => {
                 <ChapterNode src={Chapter7} onClick={handleClick} />
               ) : (
                 <div
-                  className="flex h-30 w-30 cursor-not-allowed items-start justify-start rounded-full bg-black/50"
+                  className="flex h-30 w-30 cursor-not-allowed items-start justify-start rounded-full bg-black"
                   onClick={handleFakeClick}
                 />
               )}

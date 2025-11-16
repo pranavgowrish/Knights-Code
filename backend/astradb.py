@@ -124,10 +124,10 @@ async def getStudentInfo():
     
 @app.post("/question")
 async def question(request: Request):
-    data = request.json()
-    
-    chapter = data.get("chapter")
-    question = data.get("question")
+    body = await request.json()  # <-- parse JSON body
+
+    chapter = body.get("chapter")
+    question = body.get("question")
     
     if (not question) or (not chapter):
         message = {
@@ -143,13 +143,13 @@ async def question(request: Request):
     
     if intquestion == 1:
         # print(chapterData["chapter"], chapterData["t1"], chapterData["t2"], "\n")
-        return JSONResponse(content=gemini.generate_mcq(chapterData["t1"], chapterData["t2"]))
+        return JSONResponse(content=gemini.generate_mcq(chapterData["chapter"]+" "+chapterData["t1"], chapterData["chapter"]+" "+chapterData["t2"]))
     elif intquestion == 2:
         # print(chapterData["chapter"], chapterData["t1"], "\n")
-        return JSONResponse(content=gemini.generate_coding(chapterData["t1"]))
+        return JSONResponse(content=gemini.generate_coding(chapterData["chapter"]+" "+chapterData["t1"]))
     elif intquestion == 3:
         # print(chapterData["chapter"], chapterData["t2"], "\n")
-        return JSONResponse(content=gemini.generate_coding(chapterData["t2"]))
+        return JSONResponse(content=gemini.generate_coding(chapterData["chapter"]+" "+chapterData["t2"]))
     
     message = {
         "message": "Success"
@@ -225,4 +225,4 @@ def getQuestion(chapter, question):
     
     return JSONResponse(content=response)
     
-getQuestion(2, 1)
+#getQuestion(2, 1)

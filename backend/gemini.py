@@ -4,6 +4,7 @@ import os
 from fastapi import FastAPI, Request, Body
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import re
 
 # The client gets the API key from the environment variable `GEMINI_API_KEY`.
 load_dotenv()
@@ -67,11 +68,12 @@ def generate_mcq(topic, *args):
     response = client.models.generate_content(
         model="gemini-2.5-flash", contents=prompt
     )
+    strResponse = response.text
     
     result = {}
 
     # Extract passage
-    passage_match = re.search(r"passage:\s*(.*?)\s*q1:", strResponse, re.DOTALL | re.IGNORECASE)
+    passage_match = re.search(r"passage\s*:\s*(.*?)\s*q1\s*:", strResponse, re.DOTALL | re.IGNORECASE)
     if passage_match:
         result["passage"] = passage_match.group(1).strip()
     else:
@@ -98,32 +100,48 @@ def generate_mcq(topic, *args):
     # message = {
     #     "question": response.text
     # }
-    return JSONResponse(content=result)
+    return result
     # print(message)
 
 
 def generate_coding(topic):
-    print("lol")
+    print("Generating coding question... for topic:", topic)
+    
     prompt = f"""Here is is/are the topic(s): {topic}
-    Generate a coding question based on the topic(s). The question should be challenging but not too difficult. 
-    The question should be in comments at the top of the boiler plate code. 
-    The question should be clear and concise. The entire code should not require more than 100 lines.
     
     Provide code that partly solves the question (when necessary), but still challenges the student to fix/edit it 
-    regarding the topic(s).
+    regarding the topic(s). Should be a bit simple since it's for beginners to C++.
     
-    seperate the question and the code with a line of dashes.
+    have the question commented make sure the code does not have any 'std::' prefixes. instead use namespace std
+    also don't use any input like cin.
+    then, create simple test cases in a main function (it should call the function the student edits) 
+    to make sure the code outputs correctly. Don't expect the student to type input, the tests should pass values directly.
     
-    then, create 5 test cases in a main function (it should call the function the student edits) 
-    to make sure the code runs correctly. 
-    
-    then, create the expected console output starting with the line "Exp:". Don't say anything except for the code first and then "Exp:" after that
+    then, create the exact expected console output starting with the line "Exp:". Don't say anything except for the code first and then "Exp:" after that.
+
     """
+    
     response = client.models.generate_content(
         model="gemini-2.5-flash", contents=prompt
     )
+    text = response.text.strip()
+
+    # Remove ```cpp at the start
+    text = re.sub(r"^```cpp\s*", "", text)
+
+    # Remove ``` anywhere before 'Exp:' (non-greedy)
+    text = re.sub(r"```(?=\s*Exp:)", "", text)
+
+    # Now split code and expected output
+    if "Exp:" in text:
+        code_part, expect_part = text.split("Exp:", 1)
+    else:
+        code_part = text
+        expect_part = ""
+
     message = {
-        "question": response.text
+        "code": code_part.strip(),
+        "expect": expect_part.strip()
     }
-    return JSONResponse(content=message)
-    print(message)
+    
+    return message

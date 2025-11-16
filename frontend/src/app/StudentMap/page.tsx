@@ -14,35 +14,51 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const StudentMap = () => {
+  const [email, setEmail] = useState("");
   const [chapter, setChapter] = useState(-1);
   const [questionNum, setQuestion] = useState(-1);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      // setChapter(1);
-      // setQuestion(1);
-      try {
-        const response = await fetch("http://127.0.0.1:8000/getStudentInfo");
-        if (!response.ok) {
-          throw new Error(`Http Error: status: ${response.status}`);
-        }
-        const result = await response.json();
-        console.log(result);
-        setChapter(result.chapter);
-        setQuestion(result.question);
-      } catch (e) {
-        console.log(e);
+  const fetchData = async () => {
+    const studentEmail = sessionStorage.getItem("studentEmail");
+    setEmail(studentEmail ?? "");
+    if (!studentEmail) return;
+
+    try {
+      console.log("Fetching student info for email:", studentEmail);
+      const response = await fetch("http://127.0.0.1:8000/getStudentInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: studentEmail }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
       }
-    };
-    fetchData();
-  }, []);
+
+      const result = await response.json();
+      console.log(result);
+
+      setChapter(result.chapter);
+      setQuestion(result.question);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   const handleClick = () => {
     console.log("chapter: ", chapter);
     console.log("questionNum: ", questionNum);
 
     const data = {
+      email: email,
       chapter: chapter,
       questionNum: questionNum,
       background: `${chapter}.png`,

@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # The client gets the API key from the environment variable `GEMINI_API_KEY`.
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client = genai.Client(api_key="AIzaSyBYfWImgEp82cQsXTRaRdZ5lzQ85wldnas")
 
 
 app = FastAPI()

@@ -20,38 +20,37 @@ const StudentMap = () => {
   const router = useRouter();
 
   useEffect(() => {
-  const fetchData = async () => {
-    const studentEmail = sessionStorage.getItem("studentEmail");
-    setEmail(studentEmail ?? "");
-    if (!studentEmail) return;
+    const fetchData = async () => {
+      const studentEmail = sessionStorage.getItem("studentEmail");
+      setEmail(studentEmail ?? "");
+      if (!studentEmail) return;
 
-    try {
-      console.log("Fetching student info for email:", studentEmail);
-      const response = await fetch("http://127.0.0.1:8000/getStudentInfo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: studentEmail }),
-      });
+      try {
+        console.log("Fetching student info for email:", studentEmail);
+        const response = await fetch("http://127.0.0.1:8000/getStudentInfo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: studentEmail }),
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        setChapter(result.chapter);
+        setQuestion(result.question);
+      } catch (err) {
+        console.log(err);
       }
+    };
 
-      const result = await response.json();
-      console.log(result);
-
-      setChapter(result.chapter);
-      setQuestion(result.question);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  fetchData();
-}, []);
-
+    fetchData();
+  }, []);
 
   const handleClick = () => {
     console.log("chapter: ", chapter);
@@ -71,53 +70,113 @@ const StudentMap = () => {
     router.push("/test");
   };
 
+  const handleFakeClick = () => {
+    return;
+  };
+
   return (
     <div className="flex h-screen w-screen flex-wrap">
       {/* 1 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-1/2 items-end justify-start border-0">
-          <ChapterNode src={Chapter1} onClick={handleClick} />
+          {chapter >= 1 ? (
+            <ChapterNode src={Chapter1} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 2 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-1/2 items-start justify-center border-0">
-          <ChapterNode src={Chapter3} onClick={handleClick} />
+          {chapter >= 3 ? (
+            <ChapterNode src={Chapter3} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-start justify-center rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
         <div className="flex w-1/2 items-end justify-center border-0">
-          <ChapterNode src={Chapter4} onClick={handleClick} />
+          {chapter >= 4 ? (
+            <ChapterNode src={Chapter4} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 3 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-1/2 items-end justify-start border-0">
-          <ChapterNode src={Chapter9} onClick={handleClick} />
+          {chapter >= 9 ? (
+            <ChapterNode src={Chapter9} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-end justify-start rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
         <div className="flex w-1/2 items-start justify-end border-0">
-          <ChapterNode src={Chapter10} onClick={handleClick} />
+          {chapter >= 10 ? (
+            <ChapterNode src={Chapter10} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 4 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-full items-start justify-end border-0">
-          <ChapterNode src={Chapter2} onClick={handleClick} />
+          {chapter >= 2 ? (
+            <ChapterNode src={Chapter2} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-start justify-end rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 5 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-full items-end justify-center border-0">
-          <ChapterNode src={Chapter5} onClick={handleClick} />
+          {chapter >= 5 ? (
+            <ChapterNode src={Chapter5} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-end justify-center rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 6 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-full items-center justify-end border-0">
-          <ChapterNode src={Chapter8} onClick={handleClick} />
+          {chapter >= 8 ? (
+            <ChapterNode src={Chapter8} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-center justify-end rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
@@ -126,14 +185,28 @@ const StudentMap = () => {
       {/* 8 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-full items-end justify-end border-0">
-          <ChapterNode src={Chapter6} onClick={handleClick} />
+          {chapter >= 6 ? (
+            <ChapterNode src={Chapter6} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-end justify-end rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
 
       {/* 9 */}
       <div className="flex h-1/3 w-1/3 border-0">
         <div className="flex w-full items-start justify-start border-0">
-          <ChapterNode src={Chapter7} onClick={handleClick} />
+          {chapter >= 7 ? (
+            <ChapterNode src={Chapter7} onClick={handleClick} />
+          ) : (
+            <div
+              className="flex h-30 w-30 cursor-not-allowed items-start justify-start rounded-full bg-black"
+              onClick={handleFakeClick}
+            />
+          )}
         </div>
       </div>
     </div>

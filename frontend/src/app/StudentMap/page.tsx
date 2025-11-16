@@ -102,7 +102,7 @@ const StudentMap = () => {
       
       {/* 2. BACKGROUND IMAGE (z-0) */}
       <Image
-        src="/background/map_screen_BG.png" 
+        src="/background/newest_map.png" 
         alt="Mystical Map Background"
         fill
         className="absolute top-0 left-0 z-0 object-cover" 
@@ -112,10 +112,8 @@ const StudentMap = () => {
       {/* 3. Antique Frame Wrapper (16:9 Aspect Ratio Look) */}
       <div 
         className="relative w-full aspect-video max-h-[90vh] max-w-[90vw] 
-                   overflow-hidden shadow-2xl shadow-black/80 
                    border-4 border-[#4b350f] lg:border-8 
-                   drop-shadow-[0_0_15px_rgba(200,150,50,0.5)] 
-                   bg-gray-900/50 backdrop-blur-sm z-10"
+                   z-10 "
       >
         
         {/* Title Header (z-20: Sits above frame/background) */}
@@ -238,7 +236,9 @@ const StudentMap = () => {
             </div>
           </div>
 
-          <div className="h-1/3 w-1/3 border-0"></div>
+          <div className="h-1/3 w-1/3 border-0">
+             
+          </div>
 
           {/* 8 */}
           <div className="flex h-1/3 w-1/3 border-0">

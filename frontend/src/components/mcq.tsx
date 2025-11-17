@@ -1,5 +1,4 @@
 "use client";
-import { constants } from "node:fs/promises";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -66,7 +65,6 @@ const MCQ = (props: MCQProps) => {
       } catch (err) {
         console.error(err);
         console.log("Network or server error");
-      } finally {
       }
     } else {
       setcorrect("false");
@@ -116,6 +114,7 @@ const MCQ = (props: MCQProps) => {
 
           {/* Questions */}
           {["q1", "q2", "q3"].map((qKey, i) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const qObj = props[qKey as keyof MCQProps] as any;
             return (
               <div key={qKey} className="mb-4">
@@ -127,6 +126,7 @@ const MCQ = (props: MCQProps) => {
                   {[qObj.c1, qObj.c2, qObj.c3].map((c: string) => (
                     <button
                       key={c}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       onClick={() => handleSelect(qKey as any, c)}
                       className={`w-full rounded border px-3 py-1 text-left text-sm ${
                         answers[qKey as keyof typeof answers] === c

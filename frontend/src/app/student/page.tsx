@@ -7,12 +7,12 @@ import Image from "next/image";
 
 const Student = () => {
   const router = useRouter();
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleStudent = async (credentialResponse: any) => {
     console.log("Raw Google response:", credentialResponse);
 
     if (credentialResponse.credential) {
-      const user = jwtDecode(credentialResponse.credential);
+      const user = jwtDecode<{ email: string }>(credentialResponse.credential);
       console.log("Decoded user:", user);
       const email = user.email;
       console.log("User email:", email);

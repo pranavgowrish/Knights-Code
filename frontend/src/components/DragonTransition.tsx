@@ -5,21 +5,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 // Variants for the main transition screen (The Dragon)
+// Variants for the main transition screen (The Dragon)
 const transitionVariants = {
   // The dark overlay fades in and out with the dragon
   initial: { opacity: 0, scale: 0.8 },
   enter: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: "easeInOut" },
+    transition: { duration: 0.7, ease: "easeInOut" as const },
   },
   exit: {
     opacity: 0,
     scale: 0.8,
-    transition: { duration: 0.7, ease: "easeInOut", delay: 1.5 },
+    transition: { duration: 0.7, ease: "easeInOut" as const, delay: 1.5 },
   },
 };
-
+// Variants for the "Fire Breath" effect (Red fade)
 // Variants for the "Fire Breath" effect (Red fade)
 const fireVariants = {
   initial: { opacity: 0, scaleY: 0.05 },
@@ -29,11 +30,10 @@ const fireVariants = {
     transition: {
       delay: 0.5, // Starts after the transition screen is up
       duration: 1.5,
-      ease: "easeOut",
+      ease: "easeOut" as const,
     },
   },
 };
-
 // Variants for the Dragon Image itself (Optional extra animation)
 const dragonVariants = {
   initial: { opacity: 0, y: -50 },

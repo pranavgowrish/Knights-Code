@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+// @ts-expect-error -- livecodes has no types ---
 import LiveCodes, { Playground } from "livecodes/react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -54,7 +55,7 @@ const IDE = (props: IDEProps) => {
   const [correct, setcorrect] = useState("");
   function diffStrings(a: string, b: string) {
     const len = Math.max(a.length, b.length);
-    let diffs = [];
+    const diffs = [];
 
     for (let i = 0; i < len; i++) {
       if (a[i] !== b[i]) {
@@ -68,16 +69,13 @@ const IDE = (props: IDEProps) => {
 
     return diffs;
   }
-  const [diff, setDiff] = useState<
-    { index: number; given: string; expected: string }[]
-  >([]);
+
   const onReady = (sdk: Playground) => {
     setPlayground(sdk);
 
-    const consoleWatcher = sdk.watch("console", async ({ method, args }) => {
+    const consoleWatcher = sdk.watch("console", async ({ method, args }: { method: string; args: string[] }) => {
       console.log(`Console ${method}:`, ...args);
       if (args[0].trim() === props.correctOutput.trim()) {
-        console.log("✅ Correct!");
         setcorrect("true");
         props.setCount(props.count + 1);
 
@@ -116,7 +114,6 @@ const IDE = (props: IDEProps) => {
         } catch (err) {
           console.error(err);
           console.log("Network or server error");
-        } finally {
         }
       } else {
         const diffs = diffStrings(args[0], props.correctOutput);
@@ -125,7 +122,7 @@ const IDE = (props: IDEProps) => {
 
         if (diffs.length > 0) {
           console.log("First difference:", diffs[0]);
-          setDiff(diffs);
+          // setDiff(diffs);
         }
         console.log("❌ Try again!: ", args[0]);
         setErrors(args[0]);
@@ -142,7 +139,7 @@ const IDE = (props: IDEProps) => {
   };
 
   const run = async () => {
-    playground.run().then((result) => {
+    playground.run().then(() => {
       console.log("Run finished");
     });
   };

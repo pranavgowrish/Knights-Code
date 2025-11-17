@@ -3,11 +3,10 @@ import IDE from "@/components/ide";
 import MCQ from "@/components/mcq";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { p, s } from "framer-motion/client";
 
 interface StudyZoneProps {
-  chapno: int;
-  qno: int;
+  chapno: number;
+  qno: number;
   background: string;
   email?: string;
 }
@@ -16,7 +15,9 @@ const StudyZone = (props: StudyZoneProps) => {
   const [loading, setLoading] = useState(true);
 
   const [showWarning, setShowWarning] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [mcqData, setMcqData] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ideData, setIdeData] = useState<any>(null);
 
   const [check, setcheck] = useState(0);
@@ -99,13 +100,14 @@ const StudyZone = (props: StudyZoneProps) => {
   };
 
   const handleNext = () => {
-    if (props.qno != props.qno) {
-    }
+    // if (props.qno != props.qno) {
+    // }
 
     if (props.qno === 3) {
       setShowWarning(
         "⚔ Thou hast reached the end of thy chapter's quest. Proceed to the next chapter, mighty one! ⚔",
       );
+      console.log(check);
       setTimeout(() => setShowWarning(""), 3000);
     } else {
       setShowWarning("⚔ Thou shall not pass, brave knight! ⚔");

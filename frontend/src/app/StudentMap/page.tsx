@@ -110,7 +110,7 @@ const StudentMap = () => {
     fetchData();
   }, []);
 
-  const handleClick = (chap) => {
+  const handleClick = (chap: number) => {
     let data;
     if (chap == chapter) {
       data = {

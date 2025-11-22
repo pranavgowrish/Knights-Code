@@ -26,7 +26,7 @@ const Test = () => {
         <StudyZone
           chapno={chapter}
           qno={questionNum}
-          background={`../background/CH${chapter}_BG.png`}
+          background={`../background/Ch${chapter}_BG.png`}
           email={email}
         />
       )}

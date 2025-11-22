@@ -84,13 +84,16 @@ const StudentMap = () => {
 
     try {
       console.log("Fetching student info for email:", studentEmail);
-      const response = await fetch("http://127.0.0.1:8000/getStudentInfo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://knight-s-code.onrender.com/getStudentInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: studentEmail }),
         },
-        body: JSON.stringify({ email: studentEmail }),
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);

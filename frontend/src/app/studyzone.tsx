@@ -36,13 +36,16 @@ const StudyZone = (props: StudyZoneProps) => {
       props.qno,
     );
     const fetchData = async () => {
-      const response = await fetch("http://127.0.0.1:8000/question", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://knight-s-code.onrender.com/question",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ chapter: props.chapno, question: props.qno }),
         },
-        body: JSON.stringify({ chapter: props.chapno, question: props.qno }),
-      });
+      );
 
       const data = await response.json();
       console.log("DATA:", data);

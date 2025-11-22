@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const Student = () => {
   const router = useRouter();
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleStudent = async (credentialResponse: any) => {
     console.log("Raw Google response:", credentialResponse);
 
@@ -20,13 +20,16 @@ const Student = () => {
 
       try {
         const sendEmailToBackend = async () => {
-          const response = await fetch("http://127.0.0.1:8000/users", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+          const response = await fetch(
+            "https://knight-s-code.onrender.com/users",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email: email }),
             },
-            body: JSON.stringify({ email: email }),
-          });
+          );
           const data = await response.json();
           console.log("Response from backend:", data);
         };

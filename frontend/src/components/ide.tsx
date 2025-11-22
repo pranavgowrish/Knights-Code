@@ -73,64 +73,70 @@ const IDE = (props: IDEProps) => {
   const onReady = (sdk: Playground) => {
     setPlayground(sdk);
 
-    const consoleWatcher = sdk.watch("console", async ({ method, args }: { method: string; args: string[] }) => {
-      console.log(`Console ${method}:`, ...args);
-      if (args[0].trim() === props.correctOutput.trim()) {
-        setcorrect("true");
-        props.setCount(props.count + 1);
+    const consoleWatcher = sdk.watch(
+      "console",
+      async ({ method, args }: { method: string; args: string[] }) => {
+        console.log(`Console ${method}:`, ...args);
+        if (args[0].trim() === props.correctOutput.trim()) {
+          setcorrect("true");
+          props.setCount(props.count + 1);
 
-        let question = props.question + 1;
-        let chapter = props.chapter;
-        if (question > 3) {
-          // all questions in chapter done
-          question = 1;
-          chapter = chapter + 1;
-        }
-        try {
-          const response = await fetch("http://127.0.0.1:8000/updateChapDone", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: props.email,
-              chapter: chapter,
-              question: question,
-            }),
-          });
-
-          const data = await response.json();
-
-          if (response.ok) {
-            console.log(
-              `Chapter updated! Current chapter: ${data.chapter}, question: ${data.questionNum}`,
-            );
-            setTimeout(() => {
-              router.push("/StudentMap");
-            }, 3000); // wait 1 second
-          } else {
-            console.log(`Error: ${data.message}`);
+          let question = props.question + 1;
+          let chapter = props.chapter;
+          if (question > 3) {
+            // all questions in chapter done
+            question = 1;
+            chapter = chapter + 1;
           }
-        } catch (err) {
-          console.error(err);
-          console.log("Network or server error");
-        }
-      } else {
-        const diffs = diffStrings(args[0], props.correctOutput);
+          try {
+            const response = await fetch(
+              "https://knight-s-code.onrender.com/updateChapDone",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: props.email,
+                  chapter: chapter,
+                  question: question,
+                }),
+              },
+            );
 
-        console.log("Total differences:", diffs.length);
+            const data = await response.json();
 
-        if (diffs.length > 0) {
-          console.log("First difference:", diffs[0]);
-          // setDiff(diffs);
+            if (response.ok) {
+              console.log(
+                `Chapter updated! Current chapter: ${data.chapter}, question: ${data.questionNum}`,
+              );
+              setTimeout(() => {
+                router.push("/StudentMap");
+              }, 3000); // wait 1 second
+            } else {
+              console.log(`Error: ${data.message}`);
+            }
+          } catch (err) {
+            console.error(err);
+            console.log("Network or server error");
+          }
+        } else {
+          const diffs = diffStrings(args[0], props.correctOutput);
+
+          console.log("Total differences:", diffs.length);
+
+          if (diffs.length > 0) {
+            console.log("First difference:", diffs[0]);
+            // setDiff(diffs);
+          }
+          console.log("❌ Try again!: ", args[0]);
+          setErrors(args[0]);
+          setcorrect("false");
         }
-        console.log("❌ Try again!: ", args[0]);
-        setErrors(args[0]);
-        setcorrect("false");
-      }
-      // Clear the correct indicator after 1.5 seconds`
-      setTimeout(() => setcorrect(""), 1500);
-    });
+        // Clear the correct indicator after 1.5 seconds`
+        setTimeout(() => setcorrect(""), 1500);
+      },
+    );
 
     // Optional cleanup when unmounted
     return () => {
@@ -154,7 +160,7 @@ const IDE = (props: IDEProps) => {
     // Use errors from state or directly from the console watcher if needed
     const error = errors; // Make sure errors are updated before calling ask
     console.log("Asking Merlin with code:", code, "and error:", error);
-    const response = await fetch("http://127.0.0.1:8000/merlin", {
+    const response = await fetch("https://knight-s-code.onrender.com/merlin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -247,7 +253,7 @@ const IDE = (props: IDEProps) => {
             </h2>
 
             {/* Content with shimmer if hint matches */}
-            <p className="relative mb-4 overflow-hidden text-sm text-yellow-900">
+            <div className="relative mb-4 overflow-hidden text-sm text-yellow-900">
               {hint === "Consulting the Oracle..." ? (
                 <span className="loading-text">{hint}</span>
               ) : (
@@ -255,7 +261,7 @@ const IDE = (props: IDEProps) => {
                   <ReactMarkdown>{hint}</ReactMarkdown>
                 </span>
               )}
-            </p>
+            </div>
 
             {/* Sparkles only if hint matches */}
             {hint === "Consulting the Oracle..." && (

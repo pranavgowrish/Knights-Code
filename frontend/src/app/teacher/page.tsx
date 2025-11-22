@@ -48,7 +48,7 @@ const Teacher = () => {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        fetch("http://127.0.0.1:8000/pdf", {
+        fetch("https://knight-s-code.onrender.com/pdf", {
           method: "POST",
           body: formData,
         })

@@ -1,8 +1,6 @@
-// src/app/teacher/page.tsx
-
 "use client";
 import { useState } from "react";
-import Image from "next/image"; // Image component is correctly imported
+import Image from "next/image";
 import React from "react";
 
 const Teacher = () => {
@@ -12,7 +10,6 @@ const Teacher = () => {
 
   const [fileNameNumber, setFileNameNumber] = useState(-1);
 
-  // --- ORIGINAL TEACHER LOGIC (UNCHANGED) ---
   const getUploadedFile = (fileName: string) => {
     let num = 0;
     for (let i = 0; i < fileName.length; i++) {
@@ -61,33 +58,26 @@ const Teacher = () => {
       }
     }
   };
-  // --- END OF ORIGINAL TEACHER LOGIC ---
 
   return (
-    // 1. Root Container: (No background style prop here)
-    <div className="relative flex min-h-screen w-screen flex-col items-center justify-center bg-gray-900">
-      {/* 2. BACKGROUND IMAGE: Correctly using Next.js Image Component */}
+    <div className="relative flex h-screen w-screen flex-col items-center justify-center bg-gray-900">
       <Image
-        src="/background/map_screen_BG.png" // Source is correct
+        src="/background/map_screen_BG.png"
         alt="Mystical Map Background"
-        fill // Fills the root container
-        className="absolute top-0 left-0 z-0 object-cover" // Ensures cover behavior
+        fill 
+        className="absolute top-0 left-0 z-0 object-cover"
         priority
       />
 
-      {/* 3. Antique Frame Wrapper (16:9 Aspect Ratio Look) */}
       <div
-        className="relative z-10 aspect-video max-h-[90vh] w-full max-w-[90vw] overflow-hidden border-[16px] border-[#4b350f] bg-gray-900/50 shadow-2xl shadow-black/80 drop-shadow-[0_0_10px_rgba(200,150,50,0.5)] backdrop-blur-sm lg:border-[32px]" // Frame styling
+        className="flex justify-center items-center relative z-10 h-4/5 w-5/6 p-4 md:aspect-video md:inset-0 overflow-hidden border-16 border-[#4b350f] bg-gray-900/50 shadow-2xl shadow-black/80 drop-shadow-[0_0_10px_rgba(200,150,50,0.5)] backdrop-blur-sm lg:border-32"
       >
-        {/* 4. Content Container (Centered within the frame) */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+        <div className="absolute h-3/4 w-11/12 flex flex-col items-center justify-center">
           <div className="flex w-full max-w-sm flex-col items-center gap-8 rounded-2xl border border-gray-300 bg-white/90 p-10 shadow-2xl backdrop-blur-md">
-            {/* Title (Visual) */}
             <h1 className="text-center font-['Pirata_One'] text-4xl text-gray-800 uppercase drop-shadow-md">
               SchoolMaster Portal
             </h1>
 
-            {/* Game Code Display */}
             <div className="w-full text-center">
               {fileNameNumber >= 0 && (
                 <div className="rounded-lg border-2 border-indigo-500 bg-indigo-100 p-3 text-xl text-indigo-700 shadow-md">
@@ -101,7 +91,6 @@ const Teacher = () => {
               )}
             </div>
 
-            {/* File Upload Form */}
             <form className="flex w-full items-center justify-center gap-4">
               <input
                 type="file"
@@ -113,7 +102,6 @@ const Teacher = () => {
               />
             </form>
 
-            {/* Footer Note (Visual) */}
             <div className="mt-4 text-sm text-gray-500">
               <p>Manage assignments for your scholars.</p>
             </div>
